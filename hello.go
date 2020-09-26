@@ -5,16 +5,13 @@ import (
 )
 
 func main() {
-	nome := "Tatiana"
-	versao := 1.5
-	fmt.Println("Hello, ", nome, "!")
-	fmt.Println("Este programa está na versão: ", versao)
+
+	exibeIntroducao()
+	leComando()
+
 	fmt.Println("1- Iniciar monitoramento")
 	fmt.Println("2- Exibir logs")
 	fmt.Println("0- Sair do programa")
-	var comando int
-	fmt.Scan(&comando)
-	fmt.Println("O comando escolhido foi: ", comando)
 
 	// if comando == 1 {
 	// 	fmt.Println("Monitorando...")
@@ -38,4 +35,18 @@ func main() {
 	default:
 		fmt.Println("Não conheço este comando")
 	}
+}
+
+func exibeIntroducao() {
+	nome := "Tatiana"
+	versao := 1.5
+	fmt.Println("Hello, ", nome, "!")
+	fmt.Println("Este programa está na versão: ", versao)
+}
+
+func leComando(comando) {
+	var comando int
+	fmt.Scan(&comando)
+	fmt.Println("O comando escolhido foi: ", comando)
+
 }
