@@ -4,8 +4,11 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"reflect"
+	"time"
 )
+
+const monitoramentos = 3
+const delay = 5
 
 func main() {
 
@@ -20,18 +23,10 @@ func main() {
 	// } else {
 	// 	fmt.Println("Não conheço este comando")
 	// }
-	// exibeIntroducao()
-
-	var sites [4]string
-	sites[0] = "https://random-status-code.herokuapp.com"
-	sites[1] = "https://alura.com.br"
-	sites[2] = "https://google.com.br"
-	fmt.Println(reflect.TypeOf(sites))
-	fmt.Println(sites)
-	exibeNomes()
+	exibeIntroducao()
 
 	for {
-		// exibeMenu()
+		exibeMenu()
 		comando := leComando()
 
 		switch comando {
@@ -65,18 +60,29 @@ func leComando() int {
 	var comandoLido int
 	fmt.Scan(&comandoLido)
 	fmt.Println("O comando escolhido foi: ", comandoLido)
+	fmt.Println("")
 	return comandoLido
-}
 
+}
 func iniciarMonitoramento() {
 	fmt.Println("Monitorando...")
-	var sites [4]string
-	sites[0] = "https://random-status-code.herokuapp.com"
-	sites[1] = "https://alura.com.br"
-	sites[2] = "https://google.com.br"
-	fmt.Println(sites)
+	sites := []string{"https://random-status-code.herokuapp.com", "https://alura.com.br", "https://google.com.br"}
 
-	site := "https://random-status-code.herokuapp.com/"
+	for i := 0; i < monitoramentos; i++ {
+
+		for i, site := range sites {
+			fmt.Println("Testando o site: ", i, ":", site)
+			testaSite(site)
+		}
+		time.Sleep(delay * time.Second)
+		fmt.Println("")
+	}
+
+	fmt.Println("")
+
+}
+
+func testaSite(site string) {
 	resp, _ := http.Get(site)
 
 	if resp.StatusCode == 200 {
@@ -84,21 +90,6 @@ func iniciarMonitoramento() {
 	} else {
 		fmt.Println("Site: ", site, " está com problemas. Status Code: ", resp.StatusCode)
 	}
-}
-
-func exibeNomes() {
-	nomes := []string{"Tatiana", "Anderson", "Luiz"}
-	fmt.Println(nomes)
-	fmt.Println(reflect.TypeOf(nomes))
-	fmt.Println("O meu slice tem: ", len(nomes), "itens")
-	fmt.Println("O meu slice tem capacidade para: ", cap(nomes), "itens")
-
-	nomes = append(nomes, "Moreno")
-
-	fmt.Println(nomes)
-	fmt.Println(reflect.TypeOf(nomes))
-	fmt.Println("O meu slice tem: ", len(nomes))
-	fmt.Println("O meu slice tem capacidade para: ", cap(nomes), "itens")
 }
 
 func exibirLogs() {
